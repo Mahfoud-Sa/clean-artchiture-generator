@@ -1,36 +1,198 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
+const fs = require('fs');
+const path = require('path');
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-
-/**
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
+    console.log('Congratulations, your extension "clean-architecture-generator" is now active!');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "clean-artchiture-generator" is now active!');
+    let initProjectDisposable = vscode.commands.registerCommand('clean-architecture-generator.initCleanProject', async function () {
+        // Get workspace folder
+        const workspaceFolders = vscode.workspace.workspaceFolders;
+        if (!workspaceFolders) {
+            vscode.window.showErrorMessage('Please open a workspace first.');
+            return;
+        }
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('clean-artchiture-generator.helloWorld', function () {
-		// The code you place here will be executed every time your command is executed
+        const rootPath = workspaceFolders[0].uri.fsPath;
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Clean Artchiture Generator!');
-	});
+        // Show input box for project name
+        const projectName = await vscode.window.showInputBox({
+            prompt: 'Enter your project name',
+            placeHolder: 'my_flutter_app',
+            validateInput: text => {
+                return text.match(/[^a-z0-9_]/) ? 'Only lowercase letters, numbers and underscores' : null;
+            }
+        });
 
-	context.subscriptions.push(disposable);
+        if (!projectName) {
+            return;
+        }
+
+        try {
+            // Create Clean Architecture folder structure
+            const projectStructure = {
+                'app': {
+                    'core': {
+                        'errors': [],
+                        'network': [],
+                        'usecases': [],
+                        'utils': [],
+                        'constants': []
+                    },
+                    'config': {
+                        'routes': [],
+                        'theme': [],
+                        'locales': []
+                    },
+                    'features': {
+                        'feature_name': {
+                            'data': {
+                                'datasources': [],
+                                'models': [],
+                                'repositories': []
+                            },
+                            'domain': {
+                                'entities': [],
+                                'repositories': [],
+                                'usecases': []
+                            },
+                            'presentation': {
+                                'blocs': [],
+                                'pages': [],
+                                'widgets': []
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Create folders recursively
+            const createStructure = (basePath, structure) => {
+                for (const [name, content] of Object.entries(structure)) {
+                    const currentPath = path.join(basePath, name);
+                    
+                    if (typeof content === 'object' && !Array.isArray(content)) {
+                        fs.mkdirSync(currentPath, { recursive: true });
+                        createStructure(currentPath, content);
+                    } else {
+                        fs.mkdirSync(currentPath, { recursive: true });
+                    }
+                }
+            };
+
+            // Create files
+            const createFiles = (basePath) => {
+                // Create main.dart
+                const mainDartPath = path.join(basePath, 'lib', 'main.dart');
+                fs.writeFileSync(mainDartPath, `import 'package:flutter/material.dart';
+import 'package:${projectName.toLowerCase()}/app/injection_container.dart' as di;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
+  runApp(const ${projectName.charAt(0).toUpperCase() + projectName.slice(1)}());
 }
 
-// This method is called when your extension is deactivated
+class ${projectName.charAt(0).toUpperCase() + projectName.slice(1)} extends StatelessWidget {
+  const ${projectName.charAt(0).toUpperCase() + projectName.slice(1)}({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: '${projectName}',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const Scaffold(
+        body: Center(
+          child: Text('Welcome to ${projectName}'),
+        ),
+      ),
+    );
+  }
+}`);
+
+                // Create injection_container.dart
+                const injectionContainerPath = path.join(basePath, 'app', 'injection_container.dart');
+                fs.writeFileSync(injectionContainerPath, `import 'package:get_it/get_it.dart';
+
+final sl = GetIt.instance;
+
+Future<void> init() async {
+  //! Features - feature_name
+  // Bloc
+  
+  // Use cases
+  
+  // Repository
+  
+  // Data sources
+  
+  //! Core
+  
+  //! External
+}`);
+
+                // Create .gitignore
+                const gitignorePath = path.join(basePath, '.gitignore');
+                fs.writeFileSync(gitignorePath, `# Flutter
+/build/
+/.dart_tool/
+/.flutter-plugins
+/.flutter-plugins-dependencies
+/.packages
+/.metadata
+/symlinks/
+
+# Android
+/android/gradle-wrapper.jar
+/android/local.properties
+
+# iOS
+/ios/Flutter/flutter_export_environment.sh
+/ios/.symlinks
+
+# Coverage
+/coverage/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+
+# Files
+*.log
+*.json
+*.lock
+*.DS_Store
+*.orig
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.o
+*.a
+`);
+            };
+
+            // Create the structure
+            createStructure(rootPath, projectStructure);
+            createFiles(rootPath);
+
+            vscode.window.showInformationMessage(`Clean Architecture project '${projectName}' initialized successfully!`);
+        } catch (error) {
+            vscode.window.showErrorMessage(`Error creating project structure: ${error.message}`);
+        }
+    });
+
+    context.subscriptions.push(initProjectDisposable);
+}
+
 function deactivate() {}
 
 module.exports = {
-	activate,
-	deactivate
-}
+    activate,
+    deactivate
+};

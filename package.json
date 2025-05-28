@@ -1,7 +1,7 @@
 {
-  "name": "clean-artchiture-generator",
-  "displayName": "Clean Artchiture Generator",
-  "description": "",
+  "name": "clean-architecture-generator",
+  "displayName": "Clean Architecture Generator",
+  "description": "Generates Clean Architecture structure for Flutter projects",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.87.0"
@@ -9,13 +9,22 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:clean-architecture-generator.helloWorld",
+    "onCommand:clean-architecture-generator.initCleanProject"
+  ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "clean-artchiture-generator.helloWorld",
-      "title": "Hello World"
-    }]
+    "commands": [
+      {
+        "command": "clean-architecture-generator.helloWorld",
+        "title": "Hello World"
+      },
+      {
+        "command": "clean-architecture-generator.initCleanProject",
+        "title": "Initialize Clean Architecture Project"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
