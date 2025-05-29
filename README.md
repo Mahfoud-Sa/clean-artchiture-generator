@@ -1,17 +1,13 @@
 # Clean Architecture Generator
 
-A VS Code extension that generates clean architecture templates for your projects.
+A VS Code extension that generates clean architecture templates for your
+flutter project
 
 ## Features
-- Generates folders & files following Clean Architecture principles.
-- Supports multiple languages (TypeScript, C#, etc.).
-- Customizable templates.
+-Inchilization flutter project folders & files following Clean Architecture principles.
+
 
 ## Installation
 1. Install from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=your-publisher.clean-architecture-generator).
-2. Open the Command Palette (`Ctrl+Shift+P`) and run **"Generate Clean Architecture"**.
+2. Open the Command Palette (`Ctrl+Shift+P`) and run **"initCleanProject"**.
 
-## Configuration
-Add settings to `settings.json`:
-```json
-"cleanArchitectureGenerator.defaultLanguage": "typescript"
