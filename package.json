@@ -1,8 +1,13 @@
 {
   "name": "clean-architecture-generator",
   "displayName": "Clean Architecture Generator",
+  "publisher": "mahfoudbinsabbah",
   "description": "Generates Clean Architecture structure for Flutter projects",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mahfoud-Sa/clean-artchiture-generator"
+  },
   "engines": {
     "vscode": "^1.87.0"
   },
@@ -32,12 +37,12 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.87.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
+    "@types/vscode": "^1.87.0",
     "@vscode/test-cli": "^0.0.6",
-    "@vscode/test-electron": "^2.3.9"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
   }
 }
