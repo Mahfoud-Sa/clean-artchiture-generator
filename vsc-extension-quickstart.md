@@ -1,41 +1,121 @@
-# Welcome to your VS Code Extension
+# 🏗️ Clean Architecture Generator
+A VS Code extension that scaffolds Flutter projects following **Clean Architecture** principles.
 
-## What's in the folder
+<!-- SCREENSHOT -->
 
-* This folder contains all of the files necessary for your extension.
-* `package.json` - this is the manifest file in which you declare your extension and command.
-  * The sample plugin registers a command and defines its title and command name. With this information VS Code can show the command in the command palette. It doesn’t yet need to load the plugin.
-* `extension.js` - this is the main file where you will provide the implementation of your command.
-  * The file exports one function, `activate`, which is called the very first time your extension is activated (in this case by executing the command). Inside the `activate` function we call `registerCommand`.
-  * We pass the function containing the implementation of the command as the second parameter to `registerCommand`.
+---
 
-## Get up and running straight away
+## ✨ Features
 
-* Press `F5` to open a new window with your extension loaded.
-* Run your command from the command palette by pressing (`Ctrl+Shift+P` or `Cmd+Shift+P` on Mac) and typing `Hello World`.
-* Set breakpoints in your code inside `extension.js` to debug your extension.
-* Find output from your extension in the debug console.
+- **Clean Architecture Scaffolding**  
+  Automatically generates folder structure based on Clean Architecture standards.
 
-## Make changes
+- **Separation of Concerns**  
+  Divides code into **Presentation**, **Domain**, and **Data** layers for better scalability and maintainability.
 
-* You can relaunch the extension from the debug toolbar after changing code in `extension.js`.
-* You can also reload (`Ctrl+R` or `Cmd+R` on Mac) the VS Code window with your extension to load your changes.
+- **Modular Folder Setup**  
+  Creates essential folders such as `core/`, `config/`, and `features/`.
 
-## Explore the API
+- **Service Locator Ready**  
+  Integrates easily with the `get_it` package for dependency injection.
 
-* You can open the full set of our API when you open the file `node_modules/@types/vscode/index.d.ts`.
+- **Command-Based Initialization**  
+  Run a single command to scaffold your project structure.
 
-## Run tests
+---
 
-* Install the [Extension Test Runner](https://marketplace.visualstudio.com/items?itemName=ms-vscode.extension-test-runner)
-* Open the Testing view from the activity bar and click the Run Test" button, or use the hotkey `Ctrl/Cmd + ; A`
-* See the output of the test result in the Test Results view.
-* Make changes to `test/extension.test.js` or create new test files inside the `test` folder.
-  * The provided test runner will only consider files matching the name pattern `**.test.js`.
-  * You can create folders inside the `test` folder to structure your tests any way you want.
 
-## Go further
+## 🏛️ Architecture
 
- * [Follow UX guidelines](https://code.visualstudio.com/api/ux-guidelines/overview) to create extensions that seamlessly integrate with VS Code's native interface and patterns.
- * [Publish your extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension) on the VS Code extension marketplace.
- * Automate builds by setting up [Continuous Integration](https://code.visualstudio.com/api/working-with-extensions/continuous-integration).
+### Folder Structure
+
+```plaintext
+lib/
+└── app/
+    ├── core/
+    │   ├── errors/
+    │   ├── network/
+    │   ├── usecases/
+    │   ├── utils/
+    │   └── constants/
+    ├── config/
+    │   ├── routes/
+    │   ├── theme/
+    │   └── locales/
+    └── features/
+        └── feature_name/
+            ├── data/
+            │   ├── datasources/
+            │   ├── models/
+            │   └── repositories/
+            ├── domain/
+            │   ├── entities/
+            │   ├── repositories/
+            │   └── usecases/
+            └── presentation/
+                ├── blocs/
+                ├── pages/
+                └── widgets/
+```
+
+### Layer Breakdown
+
+| Layer           | Purpose                                              | Examples                                |
+|------------------|-------------------------------------------------------|------------------------------------------|
+| **Core**         | Shared logic and utilities used across the app       | `errors/`, `network/`, `usecases/`, `utils/` |
+| **Config**       | Global app configuration                             | `routes/`, `theme/`, `locales/`         |
+| **Data**         | Handles data access from APIs, databases, etc.       | `datasources/`, `models/`, `repositories/` |
+| **Domain**       | Business logic, abstract repositories, and entities  | `entities/`, `usecases/`, `repositories/` |
+| **Presentation** | Manages UI, state, and user interaction              | `blocs/`, `pages/`, `widgets/`          |
+
+> 📁 The structure ensures a modular, scalable, and maintainable Flutter project aligned with Clean Architecture principles.
+
+---
+
+## 📦 Dependencies
+
+The following dependencies should be added to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  get_it: ^X.X.X   # Replace with the latest version
+  flutter:
+    sdk: flutter
+```
+
+> 💡 Make sure to run `flutter pub get` after updating your YAML.
+
+---
+
+## 🛠️ Usage
+
+To scaffold a clean architecture structure:
+
+```bash
+initCleanProject
+```
+
+You can run this from the Command Palette after installing the extension.
+
+<!-- SCREENSHOT -->
+
+---
+
+## 📚 Resources
+
+Here are some helpful links to understand and implement Clean Architecture in Flutter:
+
+- 📖 [Flutter Clean Architecture Guide – Reso Coder](https://resocoder.com/flutter-clean-architecture-tdd/)
+- 🧱 [Clean Architecture – Robert C. Martin (Uncle Bob)](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
+- 🧪 [Test-Driven Development in Flutter](https://flutter.dev/docs/cookbook/testing/unit/introduction)
+- 🔧 [`get_it` Package on pub.dev](https://pub.dev/packages/get_it)
+- 📦 [VS Code Extension Authoring Docs](https://code.visualstudio.com/api)
+
+> 💡 These resources are great starting points if you’re new to Clean Architecture or want to improve your project structure.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).  
+© 2025 Your Name or Organization

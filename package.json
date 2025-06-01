@@ -3,7 +3,7 @@
   "displayName": "Clean Architecture Generator",
   "publisher": "mahfoudbinsabbah",
   "description": "Generates Clean Architecture structure for Flutter projects",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "icon": "images/icon.png",  
   "repository": {
     "type": "git",
