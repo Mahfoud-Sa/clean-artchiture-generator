@@ -29,37 +29,39 @@ function activate(context) {
         }
 
         try {
-            // Create Clean Architecture folder structure
+            // Create Clean Architecture folder structure inside lib folder
             const projectStructure = {
-                'app': {
-                    'core': {
-                        'errors': [],
-                        'network': [],
-                        'usecases': [],
-                        'utils': [],
-                        'constants': []
-                    },
-                    'config': {
-                        'routes': [],
-                        'theme': [],
-                        'locales': []
-                    },
-                    'features': {
-                        'feature_name': {
-                            'data': {
-                                'datasources': [],
-                                'models': [],
-                                'repositories': []
-                            },
-                            'domain': {
-                                'entities': [],
-                                'repositories': [],
-                                'usecases': []
-                            },
-                            'presentation': {
-                                'blocs': [],
-                                'pages': [],
-                                'widgets': []
+                'lib': {
+                    'app': {
+                        'core': {
+                            'errors': [],
+                            'network': [],
+                            'usecases': [],
+                            'utils': [],
+                            'constants': []
+                        },
+                        'config': {
+                            'routes': [],
+                            'theme': [],
+                            'locales': []
+                        },
+                        'features': {
+                            'feature_name': {
+                                'data': {
+                                    'datasources': [],
+                                    'models': [],
+                                    'repositories': []
+                                },
+                                'domain': {
+                                    'entities': [],
+                                    'repositories': [],
+                                    'usecases': []
+                                },
+                                'presentation': {
+                                    'blocs': [],
+                                    'pages': [],
+                                    'widgets': []
+                                }
                             }
                         }
                     }
@@ -112,8 +114,8 @@ class ${projectName.charAt(0).toUpperCase() + projectName.slice(1)} extends Stat
   }
 }`);
 
-                // Create injection_container.dart
-                const injectionContainerPath = path.join(basePath, 'app', 'injection_container.dart');
+                // Create injection_container.dart inside lib/app
+                const injectionContainerPath = path.join(basePath, 'lib', 'app', 'injection_container.dart');
                 fs.writeFileSync(injectionContainerPath, `import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
