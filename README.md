@@ -22,6 +22,7 @@ A VS Code extension that scaffolds Flutter projects following **Clean Architectu
 - **Command-Based Initialization**  
   Run a single command to scaffold your project structure.
 
+---
 
 
 ## 🏛️ Architecture
@@ -30,24 +31,44 @@ A VS Code extension that scaffolds Flutter projects following **Clean Architectu
 
 ```plaintext
 lib/
-├── config/
-├── core/
-│   └── services/
-├── features/
-│   └── <feature_name>/
-│       ├── data/
-│       ├── domain/
-│       └── presentation/
-└── main.dart
+└── app/
+    ├── core/
+    │   ├── errors/
+    │   ├── network/
+    │   ├── usecases/
+    │   ├── utils/
+    │   └── constants/
+    ├── config/
+    │   ├── routes/
+    │   ├── theme/
+    │   └── locales/
+    └── features/
+        └── feature_name/
+            ├── data/
+            │   ├── datasources/
+            │   ├── models/
+            │   └── repositories/
+            ├── domain/
+            │   ├── entities/
+            │   ├── repositories/
+            │   └── usecases/
+            └── presentation/
+                ├── blocs/
+                ├── pages/
+                └── widgets/
 ```
 
 ### Layer Breakdown
 
-| Layer         | Purpose                                | Examples                          |
-|---------------|-----------------------------------------|-----------------------------------|
-| **Presentation** | Handles UI and user interaction         | `widgets/`, `screens/`, `blocs/`  |
-| **Domain**       | Business logic and entities             | `usecases/`, `entities/`, `repos/`|
-| **Data**         | Data handling (API, local DB, etc.)     | `datasources/`, `models/`         |
+| Layer           | Purpose                                              | Examples                                |
+|------------------|-------------------------------------------------------|------------------------------------------|
+| **Core**         | Shared logic and utilities used across the app       | `errors/`, `network/`, `usecases/`, `utils/` |
+| **Config**       | Global app configuration                             | `routes/`, `theme/`, `locales/`         |
+| **Data**         | Handles data access from APIs, databases, etc.       | `datasources/`, `models/`, `repositories/` |
+| **Domain**       | Business logic, abstract repositories, and entities  | `entities/`, `usecases/`, `repositories/` |
+| **Presentation** | Manages UI, state, and user interaction              | `blocs/`, `pages/`, `widgets/`          |
+
+> 📁 The structure ensures a modular, scalable, and maintainable Flutter project aligned with Clean Architecture principles.
 
 ---
 
@@ -71,7 +92,7 @@ dependencies:
 To scaffold a clean architecture structure:
 
 ```bash
-init
+initCleanProject
 ```
 
 You can run this from the Command Palette after installing the extension.
@@ -80,3 +101,21 @@ You can run this from the Command Palette after installing the extension.
 
 ---
 
+## 📚 Resources
+
+Here are some helpful links to understand and implement Clean Architecture in Flutter:
+
+- 📖 [Flutter Clean Architecture Guide – Reso Coder](https://resocoder.com/flutter-clean-architecture-tdd/)
+- 🧱 [Clean Architecture – Robert C. Martin (Uncle Bob)](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
+- 🧪 [Test-Driven Development in Flutter](https://flutter.dev/docs/cookbook/testing/unit/introduction)
+- 🔧 [`get_it` Package on pub.dev](https://pub.dev/packages/get_it)
+- 📦 [VS Code Extension Authoring Docs](https://code.visualstudio.com/api)
+
+> 💡 These resources are great starting points if you’re new to Clean Architecture or want to improve your project structure.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).  
+© 2025 Your Name or Organization
