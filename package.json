@@ -27,7 +27,7 @@
       },
       {
         "command": "clean-architecture-generator.initCleanProject",
-        "title": "Initialize Clean Architecture Project"
+        "title": "Clean Architecture Generator: Initialize Flutter Project"
       }
     ]
   },
