@@ -135,48 +135,7 @@ Future<void> init() async {
   //! External
 }`);
 
-                // Create .gitignore
-                const gitignorePath = path.join(basePath, '.gitignore');
-                fs.writeFileSync(gitignorePath, `# Flutter
-/build/
-/.dart_tool/
-/.flutter-plugins
-/.flutter-plugins-dependencies
-/.packages
-/.metadata
-/symlinks/
-
-# Android
-/android/gradle-wrapper.jar
-/android/local.properties
-
-# iOS
-/ios/Flutter/flutter_export_environment.sh
-/ios/.symlinks
-
-# Coverage
-/coverage/
-
-# IDE
-.vscode/
-.idea/
-*.iml
-*.swp
-*.swo
-
-# Files
-*.log
-*.json
-*.lock
-*.DS_Store
-*.orig
-*.pyc
-*.pyo
-*.pyd
-*.so
-*.o
-*.a
-`);
+ 
             };
 
             // Create the structure
