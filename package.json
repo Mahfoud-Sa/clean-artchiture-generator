@@ -3,7 +3,8 @@
   "displayName": "Clean Architecture Generator",
   "publisher": "mahfoudbinsabbah",
   "description": "Generates Clean Architecture structure for Flutter projects",
-  "version": "0.0.1",
+  "version": "0.0.3",
+  "icon": "images/icon.png",  
   "repository": {
     "type": "git",
     "url": "https://github.com/Mahfoud-Sa/clean-artchiture-generator"
@@ -44,5 +45,9 @@
     "@vscode/test-electron": "^2.5.2",
     "eslint": "^8.56.0",
     "typescript": "^5.3.3"
+  },
+  "galleryBanner": {
+    "color": "#0175C2", 
+    "theme": "dark"
   }
 }
