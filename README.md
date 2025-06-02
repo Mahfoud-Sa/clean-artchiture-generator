@@ -101,19 +101,13 @@ You can run this from the Command Palette after installing the extension.
 
 ---
 
-## 📚 Resources
 
-Here are some helpful links to understand and implement Clean Architecture in Flutter:
+## 📚 Resources
 
 - 📖 [Flutter Clean Architecture Guide – Reso Coder](https://resocoder.com/flutter-clean-architecture-tdd/)
 - 🧱 [Clean Architecture – Robert C. Martin (Uncle Bob)](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
-- 🧪 [Test-Driven Development in Flutter](https://flutter.dev/docs/cookbook/testing/unit/introduction)
 - 🔧 [`get_it` Package on pub.dev](https://pub.dev/packages/get_it)
-- 📦 [VS Code Extension Authoring Docs](https://code.visualstudio.com/api)
 
-> 💡 These resources are great starting points if you’re new to Clean Architecture or want to improve your project structure.
-
----
 
 ## 📄 License
 
