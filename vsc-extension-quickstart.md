@@ -1,7 +1,31 @@
 # 🏗️ Clean Architecture Generator
-A VS Code extension that scaffolds Flutter projects following **Clean Architecture** principles.
 
-<!-- SCREENSHOT -->
+A **VS Code extension** that scaffolds Flutter projects following **Clean Architecture** principles.
+
+---
+
+## 🚀 How to Use
+
+To scaffold a clean architecture Flutter project using this extension, follow these steps:
+
+1. **Open your VS Code Command Palette**  
+   - Press `Ctrl+Shift+P` (Windows/Linux) or `Cmd+Shift+P` (macOS)
+
+2. **Run the Command**  
+   Type and select:
+   ```bash
+   initCleanProject
+   ```
+
+3. **Choose a Project Name**  
+   You'll be prompted to enter your app name. This name will be used as the root class for the generated structure.
+
+4. **Folder Structure Generated Automatically**  
+   Once confirmed, the extension will automatically scaffold the entire **Clean Architecture** folder structure for you:
+   - `core/`, `config/`, `features/`, etc.
+   - Organized into **data**, **domain**, and **presentation** layers under each feature.
+
+> ✅ You're now ready to start building your Flutter app with a solid clean architecture foundation!
 
 ---
 
@@ -23,7 +47,6 @@ A VS Code extension that scaffolds Flutter projects following **Clean Architectu
   Run a single command to scaffold your project structure.
 
 ---
-
 
 ## 🏛️ Architecture
 
@@ -68,54 +91,47 @@ lib/
 | **Domain**       | Business logic, abstract repositories, and entities  | `entities/`, `usecases/`, `repositories/` |
 | **Presentation** | Manages UI, state, and user interaction              | `blocs/`, `pages/`, `widgets/`          |
 
-> 📁 The structure ensures a modular, scalable, and maintainable Flutter project aligned with Clean Architecture principles.
+> 📁 This structure promotes modularity, scalability, and maintainability by aligning with Clean Architecture principles.
 
 ---
 
 ## 📦 Dependencies
 
-The following dependencies should be added to your `pubspec.yaml`:
+Make sure to add the following to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  get_it: ^X.X.X   # Replace with the latest version
+  get_it: ^<latest_version>   # Check https://pub.dev/packages/get_it for the latest
   flutter:
     sdk: flutter
 ```
 
-> 💡 Make sure to run `flutter pub get` after updating your YAML.
+> 💡 Don’t forget to run `flutter pub get` after saving the file.
 
 ---
 
-## 🛠️ Usage
+## 🌟 Source Code & Star the Repo
 
-To scaffold a clean architecture structure:
+📂 You can explore the source code or contribute here:  
+🔗 **[GitHub Repository](https://github.com/Mahfoud-Sa/clean-artchiture-generator)**
 
-```bash
-initCleanProject
-```
+⭐ If you find this extension useful, **please star the repo** and share it with others to support the project!
+you can always be contributed on this repo, we always can see your updates.
+---
 
-You can run this from the Command Palette after installing the extension.
+## 👨‍💻 About the Developer
 
-<!-- SCREENSHOT -->
+ **[Your Name]**  
+🔗 [www.linkedin.com/in/mahfoud-sa]  
+📫 For feedback or collaboration: [binsabbah2013@gmail.com]
+
+> I created this extension to simplify project setup and promote clean architecture practices in Flutter. Feel free to reach out or contribute!
 
 ---
 
 ## 📚 Resources
 
-Here are some helpful links to understand and implement Clean Architecture in Flutter:
-
 - 📖 [Flutter Clean Architecture Guide – Reso Coder](https://resocoder.com/flutter-clean-architecture-tdd/)
 - 🧱 [Clean Architecture – Robert C. Martin (Uncle Bob)](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
-- 🧪 [Test-Driven Development in Flutter](https://flutter.dev/docs/cookbook/testing/unit/introduction)
 - 🔧 [`get_it` Package on pub.dev](https://pub.dev/packages/get_it)
-- 📦 [VS Code Extension Authoring Docs](https://code.visualstudio.com/api)
 
-> 💡 These resources are great starting points if you’re new to Clean Architecture or want to improve your project structure.
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).  
-© 2025 Your Name or Organization
