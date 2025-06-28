@@ -16,16 +16,13 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:clean-architecture-generator.helloWorld",
+  
     "onCommand:clean-architecture-generator.initCleanProject"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "clean-architecture-generator.helloWorld",
-        "title": "Hello World"
-      },
+      
       {
         "command": "clean-architecture-generator.initCleanProject",
         "title": "Clean Architecture Generator: Initialize Flutter Project"
