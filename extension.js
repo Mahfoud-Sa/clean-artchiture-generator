@@ -232,13 +232,39 @@ function showCustomPopup(context, projectName) {
     );
 }
 
+function copyFontFiles(context, destinationPath) {
+    const fontsSrcDir = path.join(context.extensionPath, 'resources', 'fonts');
+    const fontsDestDir = path.join(destinationPath, 'assets', 'fonts');
+
+    try {
+        if (!fs.existsSync(fontsSrcDir)) {
+            console.warn('Font source folder does not exist:', fontsSrcDir);
+            return;
+        }
+
+        fs.mkdirSync(fontsDestDir, { recursive: true });
+
+        const fontFiles = fs.readdirSync(fontsSrcDir).filter(file => file.endsWith('.ttf') || file.endsWith('.otf'));
+
+        fontFiles.forEach(font => {
+            const src = path.join(fontsSrcDir, font);
+            const dest = path.join(fontsDestDir, font);
+            fs.copyFileSync(src, dest);
+        });
+
+        console.log('Fonts copied successfully.');
+    } catch (err) {
+        console.error('Error copying fonts:', err);
+    }
+}
+
 function activate(context) {
-    console.log('Congratulations, your extension "clean-architecture-generator" is now active!');
+    console.log('Extension "clean-architecture-generator" is now active!');
 
     let initProjectDisposable = vscode.commands.registerCommand('clean-architecture-generator.initCleanProject', async function () {
         const workspaceFolders = vscode.workspace.workspaceFolders;
         if (!workspaceFolders) {
-            vscode.window.showErrorMessage('Please open a workspace first.');
+            vscode.window.showErrorMessage('Please open a workspace folder first.');
             return;
         }
 
@@ -248,13 +274,11 @@ function activate(context) {
             prompt: 'Enter your project name',
             placeHolder: 'my_flutter_app',
             validateInput: text => {
-                return text.match(/[^a-z0-9_]/) ? 'Only lowercase letters, numbers and underscores' : null;
+                return text.match(/[^a-z0-9_]/) ? 'Only lowercase letters, numbers and underscores are allowed.' : null;
             }
         });
 
-        if (!projectName) {
-            return;
-        }
+        if (!projectName) return;
 
         try {
             const projectStructure = {
@@ -306,39 +330,34 @@ function activate(context) {
 
             const createStructure = (basePath, structure) => {
                 for (const [name, content] of Object.entries(structure)) {
-                    const currentPath = path.join(basePath, name);
-                    
+                    const dir = path.join(basePath, name);
+                    fs.mkdirSync(dir, { recursive: true });
                     if (typeof content === 'object' && !Array.isArray(content)) {
-                        fs.mkdirSync(currentPath, { recursive: true });
-                        createStructure(currentPath, content);
-                    } else {
-                        fs.mkdirSync(currentPath, { recursive: true });
+                        createStructure(dir, content);
                     }
                 }
             };
 
             const createFiles = (basePath) => {
-                // Create main.dart
-                const mainDartPath = path.join(basePath, 'lib', 'main.dart');
-                fs.writeFileSync(mainDartPath, `import 'package:flutter/material.dart';
-import 'package:${projectName.toLowerCase()}/app/injection_container.dart' as di;
+                const mainPath = path.join(basePath, 'lib', 'main.dart');
+                const projectTitle = projectName.charAt(0).toUpperCase() + projectName.slice(1);
+                fs.writeFileSync(mainPath, `import 'package:flutter/material.dart';
+import 'package:${projectName}/app/injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  runApp(const ${projectName.charAt(0).toUpperCase() + projectName.slice(1)}());
+  runApp(const ${projectTitle}());
 }
 
-class ${projectName.charAt(0).toUpperCase() + projectName.slice(1)} extends StatelessWidget {
-  const ${projectName.charAt(0).toUpperCase() + projectName.slice(1)}({super.key});
+class ${projectTitle} extends StatelessWidget {
+  const ${projectTitle}({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '${projectName}',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const Scaffold(
         body: Center(
           child: Text('Welcome to ${projectName}'),
@@ -347,33 +366,29 @@ class ${projectName.charAt(0).toUpperCase() + projectName.slice(1)} extends Stat
     );
   }
 }`);
-
-                // Create injection_container.dart
-                const injectionContainerPath = path.join(basePath, 'lib', 'app', 'injection_container.dart');
-                fs.writeFileSync(injectionContainerPath, `import 'package:get_it/get_it.dart';
+                const injectPath = path.join(basePath, 'lib', 'app', 'injection_container.dart');
+                fs.writeFileSync(injectPath, `import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - feature_name
+  //! Features
   // Bloc
-  
+
   // Use cases
-  
+
   // Repository
-  
+
   // Data sources
-  
+
   //! Core
-  
+
   //! External
 }`);
 
-                // Create pubspec.yaml
                 const pubspecPath = path.join(basePath, 'pubspec.yaml');
-                fs.writeFileSync(pubspecPath, `name: ${projectName.toLowerCase()}
+                fs.writeFileSync(pubspecPath, `name: ${projectName}
 description: A new Flutter project.
-
 version: 1.0.0+1
 
 environment:
@@ -383,32 +398,36 @@ dependencies:
   flutter:
     sdk: flutter
   get_it: ^7.6.4
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
-  
   assets:
     - assets/images/icons/
     - assets/images/gifs/
     - assets/fonts/
     - assets/json/
     - assets/audio/
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/NotoKufiArabic-Regular.ttf
+        
 `);
-
-
             };
 
             createStructure(rootPath, projectStructure);
             createFiles(rootPath);
-
+            copyFontFiles(context, rootPath);
             showCustomPopup(context, projectName);
 
-        } catch (error) {
-            vscode.window.showErrorMessage(`Error creating project structure: ${error.message}`);
+        } catch (err) {
+            vscode.window.showErrorMessage(`Error: ${err.message}`);
         }
     });
 
