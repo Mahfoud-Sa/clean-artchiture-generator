@@ -292,6 +292,15 @@ function activate(context) {
                             }
                         }
                     }
+                },
+                'assets': {
+                    'images': {
+                        'icons': [],
+                        'gifs': []
+                    },
+                    'fonts': [],
+                    'json': [],
+                    'audio': []
                 }
             };
 
@@ -309,6 +318,7 @@ function activate(context) {
             };
 
             const createFiles = (basePath) => {
+                // Create main.dart
                 const mainDartPath = path.join(basePath, 'lib', 'main.dart');
                 fs.writeFileSync(mainDartPath, `import 'package:flutter/material.dart';
 import 'package:${projectName.toLowerCase()}/app/injection_container.dart' as di;
@@ -338,6 +348,7 @@ class ${projectName.charAt(0).toUpperCase() + projectName.slice(1)} extends Stat
   }
 }`);
 
+                // Create injection_container.dart
                 const injectionContainerPath = path.join(basePath, 'lib', 'app', 'injection_container.dart');
                 fs.writeFileSync(injectionContainerPath, `import 'package:get_it/get_it.dart';
 
@@ -357,6 +368,38 @@ Future<void> init() async {
   
   //! External
 }`);
+
+                // Create pubspec.yaml
+                const pubspecPath = path.join(basePath, 'pubspec.yaml');
+                fs.writeFileSync(pubspecPath, `name: ${projectName.toLowerCase()}
+description: A new Flutter project.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  get_it: ^7.6.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/icons/
+    - assets/images/gifs/
+    - assets/fonts/
+    - assets/json/
+    - assets/audio/
+`);
+
+
             };
 
             createStructure(rootPath, projectStructure);
